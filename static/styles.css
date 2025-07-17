@@ -1,0 +1,29 @@
+body {
+    background-color: #f3f4f6;
+}
+
+input, select {
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+button:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+
+#result {
+    transition: opacity 0.3s;
+}
+
+.hidden {
+    display: none;
+}
+
+canvas {
+    max-height: 400px;
+}
