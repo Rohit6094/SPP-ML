@@ -3,303 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Performance Prediction Dashboard</title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Student Performance Prediction</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/main.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body class="font-sans bg-gray-100">
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-6">Student Performance Prediction Dashboard</h1>
+<body>
+    <div class="container">
+        <h1>Student Performance Prediction</h1>
         
         <!-- Input Form -->
-        <form id="predict-form" class="bg-white p-6 rounded-lg shadow-lg mb-6">
-            <h2 class="text-xl font-semibold mb-4">Enter Student Details</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Numeric Features -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Age (15-22):</label>
-                    <input type="number" name="age" min="15" max="22" required class="w-full p-2 border rounded">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Travel Time:</label>
-                    <select name="traveltime" required class="w-full p-2 border rounded">
-                        <option value="<15 min"><15 min</option>
-                        <option value="15-30 min">15-30 min</option>
-                        <option value="30 min-1 hour">30 min-1 hour</option>
-                        <option value=">1 hour">>1 hour</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Mother's Education:</label>
-                    <select name="Medu" required class="w-full p-2 border rounded">
-                        <option value="0">None</option>
-                        <option value="1">Primary (4th grade)</option>
-                        <option value="2">5th-9th grade</option>
-                        <option value="3">Secondary</option>
-                        <option value="4">Higher Education</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Father's Education:</label>
-                    <select name="Fedu" required class="w-full p-2 border rounded">
-                        <option value="0">None</option>
-                        <option value="1">Primary (4th grade)</option>
-                        <option value="2">5th-9th grade</option>
-                        <option value="3">Secondary</option>
-                        <option value="4">Higher Education</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Weekly Study Time:</label>
-                    <select name="studytime" required class="w-full p-2 border rounded">
-                        <option value="<2 hours"><2 hours</option>
-                        <option value="2-5 hours">2-5 hours</option>
-                        <option value="5-10 hours">5-10 hours</option>
-                        <option value=">10 hours">>10 hours</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Past Class Failures:</label>
-                    <select name="failures" required class="w-full p-2 border rounded">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3+</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Family Relationship Quality:</label>
-                    <select name="famrel" required class="w-full p-2 border rounded">
-                        <option value="Very Bad">Very Bad</option>
-                        <option value="Bad">Bad</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Good">Good</option>
-                        <option value="Very Good">Very Good</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Free Time After School:</label>
-                    <select name="freetime" required class="w-full p-2 border rounded">
-                        <option value="Very Low">Very Low</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
-                        <option value="Very High">Very High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Going Out with Friends:</label>
-                    <select name="goout" required class="w-full p-2 border rounded">
-                        <option value="Very Low">Very Low</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
-                        <option value="Very High">Very High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Workday Alcohol Consumption:</label>
-                    <select name="Dalc" required class="w-full p-2 border rounded">
-                        <option value="Very Low">Very Low</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
-                        <option value="Very High">Very High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Weekend Alcohol Consumption:</label>
-                    <select name="Walc" required class="w-full p-2 border rounded">
-                        <option value="Very Low">Very Low</option>
-                        <option value="Low">Low</option>
-                        <option value="Moderate">Moderate</option>
-                        <option value="High">High</option>
-                        <option value="Very High">Very High</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Current Health Status:</label>
-                    <select name="health" required class="w-full p-2 border rounded">
-                        <option value="Very Bad">Very Bad</option>
-                        <option value="Bad">Bad</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Good">Good</option>
-                        <option value="Very Good">Very Good</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Number of Absences (0-93):</label>
-                    <input type="number" name="absences" min="0" max="93" required class="w-full p-2 border rounded">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">First Period Grade (0-20):</label>
-                    <input type="number" name="G1" min="0" max="20" required class="w-full p-2 border rounded">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Second Period Grade (0-20):</label>
-                    <input type="number" name="G2" min="0" max="20" required class="w-full p-2 border rounded">
-                </div>
-                <!-- Binary Features -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">School:</label>
-                    <select name="school" required class="w-full p-2 border rounded">
-                        <option value="GP">KU</option>
-                        <option value="MS">TU</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Sex:</label>
-                    <select name="sex" required class="w-full p-2 border rounded">
-                        <option value="F">Female</option>
-                        <option value="M">Male</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Address:</label>
-                    <select name="address" required class="w-full p-2 border rounded">
-                        <option value="U">Urban</option>
-                        <option value="R">Rural</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Family Size:</label>
-                    <select name="famsize" required class="w-full p-2 border rounded">
-                        <option value="GT3">More than 3</option>
-                        <option value="LE3">3 or fewer</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Parent Cohabitation Status:</label>
-                    <select name="Pstatus" required class="w-full p-2 border rounded">
-                        <option value="T">Living Together</option>
-                        <option value="A">Living Apart</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Extra School Support:</label>
-                    <select name="schoolsup" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Family Educational Support:</label>
-                    <select name="famsup" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Paid Classes:</label>
-                    <select name="paid" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Extracurricular Activities:</label>
-                    <select name="activities" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Attended Nursery School:</label>
-                    <select name="nursery" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Wants Higher Education:</label>
-                    <select name="higher" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Internet Access at Home:</label>
-                    <select name="internet" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">In a Romantic Relationship:</label>
-                    <select name="romantic" required class="w-full p-2 border rounded">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <!-- Nominal Features -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Mother's Job:</label>
-                    <select name="Mjob" required class="w-full p-2 border rounded">
-                        <option value="teacher">Teacher</option>
-                        <option value="health">Health Professional</option>
-                        <option value="services">Civil Services</option>
-                        <option value="at_home">At Home</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Father's Job:</label>
-                    <select name="Fjob" required class="w-full p-2 border rounded">
-                        <option value="teacher">Teacher</option>
-                        <option value="health">Health Professional</option>
-                        <option value="services">Civil Services</option>
-                        <option value="at_home">At Home</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Reason for Choosing School:</label>
-                    <select name="reason" required class="w-full p-2 border rounded">
-                        <option value="home">Close to Home</option>
-                        <option value="reputation">School Reputation</option>
-                        <option value="course">Course Preference</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Guardian:</label>
-                    <select name="guardian" required class="w-full p-2 border rounded">
-                        <option value="mother">Mother</option>
-                        <option value="father">Father</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="w-full bg-blue-500 text-white font-bold p-4 mt-6 rounded hover:bg-blue-600">Predict Grade</button>
-        </form>
-
-        <!-- Prediction Result -->
-        <div id="result" class="bg-white p-6 rounded-lg shadow-lg mb-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Prediction Results</h2>
-            <p id="prediction-rf" class="text-lg"></p>
-            <p id="prediction-lr" class="text-lg"></p>
-            <p id="prediction-ensemble" class="text-lg"></p>
-            <p id="metrics" class="text-lg"></p>
+        <div class="form-section">
+            <h2>Enter Student Details</h2>
+            <form id="prediction-form">
+                <label for="school">School:</label>
+                <select id="school" name="school">
+                    <option value="GP">GP</option>
+                    <option value="MS">MS</option>
+                </select>
+                
+                <label for="sex">Sex:</label>
+                <select id="sex" name="sex">
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                </select>
+                
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="15" max="22" required>
+                
+                <label for="address">Address:</label>
+                <select id="address" name="address">
+                    <option value="U">Urban</option>
+                    <option value="R">Rural</option>
+                </select>
+                
+                <label for="famsize">Family Size:</label>
+                <select id="famsize" name="famsize">
+                    <option value="LE3">Less or Equal to 3</option>
+                    <option value="GT3">Greater than 3</option>
+                </select>
+                
+                <label for="Pstatus">Parent's Cohabitation Status:</label>
+                <select id="Pstatus" name="Pstatus">
+                    <option value="T">Together</option>
+                    <option value="A">Apart</option>
+                </select>
+                
+                <label for="Medu">Mother's Education:</label>
+                <select id="Medu" name="Medu">
+                    <option value="0">None</option>
+                    <option value="1">Primary (4th grade)</option>
+                    <option value="2">5th to 9th grade</option>
+                    <option value="3">Secondary</option>
+                    <option value="4">Higher</option>
+                </select>
+                
+                <label for="Fedu">Father's Education:</label>
+                <select id="Fedu" name="Fedu">
+                    <option value="0">None</option>
+                    <option value="1">Primary (4th grade)</option>
+                    <option value="2">5th to 9th grade</option>
+                    <option value="3">Secondary</option>
+                    <option value="4">Higher</option>
+                </select>
+                
+                <label for="Mjob">Mother's Job:</label>
+                <select id="Mjob" name="Mjob">
+                    <option value="at_home">At Home</option>
+                    <option value="health">Health</option>
+                    <option value="other">Other</option>
+                    <option value="services">Services</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+                
+                <label for="Fjob">Father's Job:</label>
+                <select id="Fjob" name="Fjob">
+                    <option value="at_home">At Home</option>
+                    <option value="health">Health</option>
+                    <option value="other">Other</option>
+                    <option value="services">Services</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+                
+                <label for="reason">Reason for Choosing School:</label>
+                <select id="reason" name="reason">
+                    <option value="course">Course Preference</option>
+                    <option value="home">Close to Home</option>
+                    <option value="reputation">School Reputation</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="guardian">Guardian:</label>
+                <select id="guardian" name="guardian">
+                    <option value="mother">Mother</option>
+                    <option value="father">Father</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="traveltime">Travel Time:</label>
+                <select id="traveltime" name="traveltime">
+                    <option value="<15 min"><15 min</option>
+                    <option value="15-30 min">15-30 min</option>
+                    <option value="30 min-1 hour">30 min-1 hour</option>
+                    <option value=">1 hour">>1 hour</option>
+                </select>
+                
+                <label for="studytime">Study Time:</label>
+                <select id="studytime" name="studytime">
+                    <option value="<2 hours"><2 hours</option>
+                    <option value="2-5 hours">2-5 hours</option>
+                    <option value="5-10 hours">5-10 hours</option>
+                    <option value=">10 hours">>10 hours</option>
+                </select>
+                
+                <label for="failures">Number of Past Failures:</label>
+                <select id="failures" name="failures">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3+">3+</option>
+                </select>
+                
+                <label for="schoolsup">Extra Educational Support:</label>
+                <select id="schoolsup" name="schoolsup">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="famsup">Family Educational Support:</label>
+                <select id="famsup" name="famsup">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="paid">Paid Classes:</label>
+                <select id="paid" name="paid">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="activities">Extra-Curricular Activities:</label>
+                <select id="activities" name="activities">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="nursery">Attended Nursery School:</label>
+                <select id="nursery" name="nursery">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="higher">Wants Higher Education:</label>
+                <select id="higher" name="higher">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="internet">Internet Access at Home:</label>
+                <select id="internet" name="internet">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="romantic">Romantic Relationship:</label>
+                <select id="romantic" name="romantic">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                
+                <label for="famrel">Family Relationship Quality:</label>
+                <select id="famrel" name="famrel">
+                    <option value="Very Bad">Very Bad</option>
+                    <option value="Bad">Bad</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Good">Good</option>
+                    <option value="Very Good">Very Good</option>
+                </select>
+                
+                <label for="freetime">Free Time:</label>
+                <select id="freetime" name="freetime">
+                    <option value="Very Low">Very Low</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Very High">Very High</option>
+                </select>
+                
+                <label for="goout">Going Out:</label>
+                <select id="goout" name="goout">
+                    <option value="Very Low">Very Low</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Very High">Very High</option>
+                </select>
+                
+                <label for="Dalc">Workday Alcohol Consumption:</label>
+                <select id="Dalc" name="Dalc">
+                    <option value="Very Low">Very Low</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Very High">Very High</option>
+                </select>
+                
+                <label for="Walc">Weekend Alcohol Consumption:</label>
+                <select id="Walc" name="Walc">
+                    <option value="Very Low">Very Low</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Very High">Very High</option>
+                </select>
+                
+                <label for="health">Health Status:</label>
+                <select id="health" name="health">
+                    <option value="Very Bad">Very Bad</option>
+                    <option value="Bad">Bad</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Good">Good</option>
+                    <option value="Very Good">Very Good</option>
+                </select>
+                
+                <label for="absences">Absences:</label>
+                <input type="number" id="absences" name="absences" min="0" required>
+                
+                <label for="G1">First Term Grade (0-20):</label>
+                <input type="number" id="G1" name="G1" min="0" max="20" required>
+                
+                <label for="G2">Second Term Grade (0-20):</label>
+                <input type="number" id="G2" name="G2" min="0" max="20" required>
+                
+                <button type="submit">Predict</button>
+            </form>
+            <div id="error-message" class="error"></div>
         </div>
-
-        <!-- Visualizations -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Feature Importance (Random Forest) / Coefficients (Linear Regression)</h2>
-                <canvas id="featureChart"></canvas>
+        
+        <!-- Prediction Results -->
+        <div class="result-section" id="prediction-result"></div>
+        
+        <!-- Model Performance Charts -->
+        <div class="chart-section">
+            <h2>Model Performance</h2>
+            <div class="chart-container">
+                <canvas id="metrics-chart"></canvas>
+                <canvas id="feature-importance-chart"></canvas>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Actual vs. Predicted Grades</h2>
-                <canvas id="actualVsPredictedChart"></canvas>
+        </div>
+        
+        <!-- Trend and Cluster Charts -->
+        <div class="chart-section">
+            <h2>Additional Visualizations</h2>
+            <div class="chart-container">
+                <canvas id="trend-chart"></canvas>
+                <canvas id="cluster-pie-chart"></canvas>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Prediction Error Distribution</h2>
-                <canvas id="errorDistributionChart"></canvas>
-            </div>
+        </div>
+        
+        <!-- Cluster Analysis -->
+        <div class="cluster-section">
+            <h2>Cluster Analysis</h2>
+            <h3>Cluster Characteristics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cluster</th>
+                        <th>Age</th>
+                        <th>Study Time</th>
+                        <th>Failures</th>
+                        <th>Absences</th>
+                        <th>G1</th>
+                        <th>G2</th>
+                        <th>Average Grade</th>
+                    </tr>
+                </thead>
+                <tbody id="cluster-table-body"></tbody>
+            </table>
+            <h3>Cluster Visualization</h3>
+            <canvas id="cluster-chart"></canvas>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
