@@ -6,6 +6,12 @@ Welcome to the Student Performance Prediction Dashboard, an interactive web appl
 
 
 
+Student Performance Data Set
+
+Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance Number of Instances: 395 Number of Attributes: 32 Input Features + 1 Target('G3')
+
+
+
 Features
 
 
