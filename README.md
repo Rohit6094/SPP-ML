@@ -10,7 +10,9 @@ Features
 
 
 
+
 Data Preprocessing: Handles categorical and numerical data with label encoding and standardization.
+
 
 
 
@@ -27,6 +29,8 @@ Web Interface: A Flask-based dashboard for user input and result visualization.
 
 
 Visualization: Includes charts for feature importance, actual vs. predicted grades, and error distribution.
+
+
 
 Installation
 
@@ -59,9 +63,12 @@ cd student-performance-prediction
 
 
 
+
 Install dependencies:
 
 pip install -r requirements.txt
+
+
 
 
 
@@ -157,13 +164,11 @@ Push to the branch (git push origin feature-branch).
 
 Open a pull request.
 
-License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 Contact
 
-For questions or support, please open an issue on the GitHub repository or contact the maintainer at your.email@example.com.
+For questions or support, please open an issue on the GitHub repository or contact the maintainer at neurohit223@gmail.com
 
 Acknowledgments
 
